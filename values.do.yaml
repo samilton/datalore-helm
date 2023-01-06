@@ -1,0 +1,30 @@
+databaseSecret:
+  password: password123
+  key: ROOT_PASSWORD
+
+volumes:
+  - name: postgresql-data
+    hostPath:
+      path: /data/postgresql
+      type: Directory
+  - name: storage
+    hostPath:
+      path: /data/datalore
+      type: Directory
+
+ingress:
+  enabled: true
+  hosts:
+    - host: datalore.lyzrd.org
+      paths:
+        - path: /
+          pathType: Prefix
+
+agentConfig:
+  k8s:
+    namespace: datalore
+
+dataloreEnv:
+  DATALORE_PUBLIC_URL: datalore.lyzrd.org
+  DATALORE_INTERNAL_HOST: datalore-0.datalore.datalore.svc.cluster.local
+  DATABASES_K8S_NAMESPACE: datalore
